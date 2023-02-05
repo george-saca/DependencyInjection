@@ -17,24 +17,28 @@
 
             Console.Write("Enter Password:");
             var password = Console.ReadLine();
-
-            IBusines business = new BusinessV2();
-            business.SpecialSignUp(userName, password);
+             
+            IBusiness business = new BusinessV2();
+            business.SignUp(userName, password);
 
         }
     }
 
-    public class Business : IBusines
+    public class Business : IBusiness
     {
+        private readonly IDataAccess _dataAccess;
+        public Business(IDataAccess dataAccess)
+        {
+            _dataAccess = dataAccess;
+        }
         public void SignUp(string userName, string password)
         {
             // validation
-            var dataAccess = new DataAccess();
-            dataAccess.Store(userName, password);
+            _dataAccess.Store(userName, password);
         }
     }
 
-    public class BusinessV2 : IBusines
+    public class BusinessV2 : IBusiness
     {
         public void SignUp(string userName, string password)
         {
@@ -55,10 +59,9 @@
         }
     }
 
-    public interface IBusines
+    public interface IBusiness
     {
         void SignUp(string userName, string password);
-        void SpecialSignUp(string userName, string password);
     }
 
     public interface IDataAccess
