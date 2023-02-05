@@ -10,6 +10,11 @@
 
     public class UserInterface
     {
+        private readonly IBusiness _business;
+        public UserInterface(IBusiness business)
+        {
+            _business = business;
+        }
         public void GetData()
         {
             Console.Write("Enter Username:");
@@ -17,9 +22,10 @@
 
             Console.Write("Enter Password:");
             var password = Console.ReadLine();
-             
-            IBusiness business = new BusinessV2();
-            business.SignUp(userName, password);
+
+            IDataAccess dal = new DataAccess();
+            IBusiness business = new Business(dal);
+            _business.SignUp(userName, password);
 
         }
     }
