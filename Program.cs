@@ -18,12 +18,12 @@
             Console.Write("Enter Password:");
             var password = Console.ReadLine();
 
-            var business = new Business();
+            IBusines business = new Business();
             business.SignUp(userName, password);
         }
     }
 
-    public class Business
+    public class Business : IBusines
     {
         public void SignUp(string userName, string password)
         {
@@ -33,11 +33,21 @@
         }
     }
 
-    public class DataAccess
+    public class DataAccess : IDataAccess
     {
         public void Store(string userName, string password)
         {
             // write the data for the db
         }
+    }
+
+    public interface IBusines
+    {
+        void SignUp(string userName, string password);
+    }
+
+    public interface IDataAccess
+    {
+        void Store(string userName, string password);
     }
 }
