@@ -18,8 +18,9 @@
             Console.Write("Enter Password:");
             var password = Console.ReadLine();
 
-            IBusines business = new Business();
-            business.SignUp(userName, password);
+            IBusines business = new BusinessV2();
+            business.SpecialSignUp(userName, password);
+
         }
     }
 
@@ -30,6 +31,19 @@
             // validation
             var dataAccess = new DataAccess();
             dataAccess.Store(userName, password);
+        }
+    }
+
+    public class BusinessV2 : IBusines
+    {
+        public void SignUp(string userName, string password)
+        {
+            
+        }
+
+        public void SpecialSignUp(string userName, string password)
+        {
+            Console.WriteLine($"Successful for {userName}");
         }
     }
 
@@ -44,6 +58,7 @@
     public interface IBusines
     {
         void SignUp(string userName, string password);
+        void SpecialSignUp(string userName, string password);
     }
 
     public interface IDataAccess
