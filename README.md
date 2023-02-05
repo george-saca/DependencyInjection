@@ -1,1 +1,1 @@
-# DependencyInjection
+# Dependency Injection Workshop
