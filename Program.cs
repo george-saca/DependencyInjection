@@ -4,7 +4,10 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            IDataAccess dal = new DataAccess();
+            IBusiness business = new Business(dal);
+            var userInterface = new UserInterface(business);
+            userInterface.GetData();
         }
     }
 
@@ -49,11 +52,6 @@
         public void SignUp(string userName, string password)
         {
             
-        }
-
-        public void SpecialSignUp(string userName, string password)
-        {
-            Console.WriteLine($"Successful for {userName}");
         }
     }
 
