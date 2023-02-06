@@ -6,28 +6,21 @@
         {
             IDataAccess dal = new DataAccess();
             IBusiness business = new Business();
-            business.DataAccess = dal;
+            business.SetDataAccess(dal);
             var userInterface = new UserInterface();
-            userInterface.Business = business;
+            userInterface.SetBusiness(business);
             userInterface.GetData();
         }
     }
 
     public class UserInterface
     {
-        private IBusiness _business;
-        public IBusiness Business
+        public IBusiness? Business { get; set; }
+        public void SetBusiness(IBusiness business)
         {
-            set { _business = value; }
-            get 
-            {
-                if (_business == null)
-                {
-                    throw new Exception("dataAccess is not initialized");
-                }
-                return _business;
-            }
+            Business = business;
         }
+        
         public void GetData()
         {
             Console.Write("Enter Username:");
@@ -36,46 +29,32 @@
             Console.Write("Enter Password:");
             var password = Console.ReadLine();
 
-            _business.SignUp(userName, password);
+            Business.SignUp(userName, password);
         }
     }
 
     public class Business : IBusiness
     {
-        private IDataAccess? _dataAccess;
-        public IDataAccess DataAccess
+        public IDataAccess? DataAccess { get; set; }
+        public void SetDataAccess(IDataAccess dataAccess)
         {
-            set { _dataAccess = value; }
-            get
-            {
-                if(_dataAccess == null)
-                {
-                    throw new Exception("dataAccess is not initialized");
-                }
-                return _dataAccess;
-            }
+            DataAccess = dataAccess;
         }
+
         public void SignUp(string userName, string password)
         {
             // validation
-            _dataAccess?.Store(userName, password);
+            DataAccess?.Store(userName, password);
         }
     }
 
     public class BusinessV2 : IBusiness
     {
-        private IDataAccess? _dataAccess;
-        public IDataAccess DataAccess
+        public IDataAccess? DataAccess { get; set; }
+
+        public void SetDataAccess(IDataAccess dataAccess)
         {
-            set { _dataAccess = value; }
-            get
-            {
-                if (_dataAccess == null)
-                {
-                    throw new Exception("dataAccess is not initialized");
-                }
-                return _dataAccess;
-            }
+            DataAccess = dataAccess;
         }
 
         public void SignUp(string userName, string password)
@@ -94,13 +73,12 @@
 
     public interface IBusiness
     {
-        public IDataAccess DataAccess { get; set; }
+        void SetDataAccess(IDataAccess dataAccess);
         void SignUp(string userName, string password);
     }
 
     public interface IDataAccess
     {
-        public 
         void Store(string userName, string password);
     }
 }
